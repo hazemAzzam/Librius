@@ -5,7 +5,7 @@ class Author(models.Model):
     last_name = models.CharField(max_length=255, null=False)
     date_of_birth = models.DateField(null=True)
     country = models.CharField(max_length=255, null=True)
-    books = models.ManyToManyField("Book")
+    
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.country})"
     
@@ -16,6 +16,12 @@ class Publisher(models.Model):
     def __str__(self):
         return f"{self.name} - {self.country}"
     
+class Membership(models.Model):
+    membership_start_date = models.DateField(null=True, default='2000-01-01')
+    membership_end_date = models.DateField(null=True, default='2000-01-01')
+    membership_status = models.BooleanField(null=True, default='2000-01-01')
+    member = models.ForeignKey("Member", on_delete=models.CASCADE, null=True)
+
 class Member(models.Model):
     first_name = models.CharField(max_length=255, null=False)
     last_name = models.CharField(max_length=255, null=False)
@@ -23,12 +29,8 @@ class Member(models.Model):
     phone_number = models.CharField(max_length=11, null=False)
     address = models.CharField(max_length=255, null=True)
 
-    membership_start_date = models.DateField(null=False)
-    membership_end_date = models.DateField(null=True)
-    membership_status = models.BooleanField(null=False)
-
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.membership_status})"
+        return f"{self.first_name} {self.last_name}"
 
 class Book(models.Model):
     title = models.CharField(max_length=255, verbose_name='Book Title', null=False)
